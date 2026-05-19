@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أوردرات جاهزة للتغليف</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── CSS Variables ── */
+    :root {
+      --bg:          #f9fafb;
+      --surface:     #ffffff;
+      --border:      #e5e7eb;
+      --border-soft: #f3f4f6;
+      --text:        #111827;
+      --text-sub:    #6b7280;
+      --text-muted:  #9ca3af;
+      --accent:      #2563eb;
+      --accent-bg:   #eff6ff;
+      --accent-b:    #bfdbfe;
+      --green:       #16a34a;
+      --green-bg:    #f0fdf4;
+      --green-b:     #bbf7d0;
+      --red:         #dc2626;
+      --red-bg:      #fef2f2;
+      --red-b:       #fecaca;
+      --amber:       #d97706;
+      --amber-bg:    #fffbeb;
+      --amber-b:     #fde68a;
+      --purple:      #7c3aed;
+      --purple-bg:   #f5f3ff;
+      --purple-b:    #ddd6fe;
+      --font:        'Noto Sans Arabic', sans-serif;
+      --mono:        'IBM Plex Mono', monospace;
+      --radius:      10px;
+      --shadow:      0 1px 4px rgba(0,0,0,.07);
+      --shadow-md:   0 4px 16px rgba(0,0,0,.10);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      direction: rtl;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-icon { font-size: 22px; }
+    .header-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .header-sub {
+      font-size: 12px;
+      color: var(--text-sub);
+      font-weight: 400;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: background .15s, border-color .15s, color .15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn:hover { background: var(--bg); border-color: #d1d5db; }
+    .btn:active { transform: scale(.98); }
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #1d4ed8; border-color: #1d4ed8; }
+    .btn-sm { padding: 5px 11px; font-size: 12px; }
+    .btn-icon { padding: 7px 10px; }
+    .btn-loading { opacity: .6; pointer-events: none; }
+
+    .version-btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-sub);
+      background: var(--border-soft);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .version-btn:hover { background: var(--border); }
+
+    /* ── Settings Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.35);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 24px;
+      width: 420px;
+      max-width: 95vw;
+      box-shadow: var(--shadow-md);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+    .field-group { margin-bottom: 14px; }
+    .field-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .field-input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text);
+      background: var(--bg);
+      direction: ltr;
+      text-align: left;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .field-input:focus { border-color: var(--accent); background: #fff; }
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    /* ── Changelog Modal ── */
+    .cl-entry { margin-bottom: 18px; }
+    .cl-version {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-sub);
+      margin-bottom: 8px;
+    }
+    .cl-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 5px;
+      font-size: 13px;
+      color: var(--text);
+    }
+    .cl-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .cl-tag.new    { background: var(--green-bg);  color: var(--green);  border: 1px solid var(--green-b); }
+    .cl-tag.fix    { background: var(--red-bg);    color: var(--red);    border: 1px solid var(--red-b); }
+    .cl-tag.change { background: var(--amber-bg);  color: var(--amber);  border: 1px solid var(--amber-b); }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #111827;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0;
+      transition: all .25s;
+      z-index: 999;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    #toast.success { background: var(--green); }
+    #toast.error   { background: var(--red); }
+    #toast.warning { background: var(--amber); }
+
+    /* ── Main Content ── */
+    .content { padding: 20px; max-width: 900px; margin: 0 auto; }
+
+    /* ── Count Badge ── */
+    .count-box {
+      background: var(--surface);
+      border: 2px solid var(--purple-b);
+      border-radius: 14px;
+      padding: 18px 24px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .count-icon { font-size: 32px; }
+    .count-label {
+      font-size: 13px;
+      color: var(--text-sub);
+      font-weight: 500;
+    }
+    .count-number {
+      font-family: var(--mono);
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--purple);
+      line-height: 1;
+    }
+    .count-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .count-breakdown {
+      display: flex;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .count-badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .badge-s1 { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-b); }
+    .badge-s2 { background: var(--amber-bg);  color: var(--amber);  border: 1px solid var(--amber-b); }
+
+    /* ── State Messages ── */
+    .state-box {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--text-sub);
+    }
+    .state-icon { font-size: 40px; margin-bottom: 12px; }
+    .state-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+    .state-sub   { font-size: 13px; }
+
+    /* ── Orders Table ── */
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    thead th {
+      background: var(--border-soft);
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-align: right;
+      border-bottom: 1px solid var(--border);
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--border-soft);
+      transition: background .12s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--bg); }
+    td {
+      padding: 11px 14px;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    .order-link {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .order-link:hover { text-decoration: underline; }
+
+    .type-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 5px;
+    }
+    .type-s1 { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-b); }
+    .type-s2 { background: var(--amber-bg);  color: var(--amber);  border: 1px solid var(--amber-b); }
+
+    .cell-mono {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .cell-dash { color: var(--text-muted); font-size: 16px; }
+
+    .last-updated {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      font-family: var(--mono);
+    }
+
+    /* ── Spinner ── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 20px; height: 20px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      display: inline-block;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .content { padding: 12px; }
+      .count-number { font-size: 32px; }
+      thead th:nth-child(4),
+      td:nth-child(4) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- HEADER                                                      -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<header class="header">
+  <div class="header-left">
+    <span class="header-icon">📦</span>
+    <div>
+      <div class="header-title">أوردرات جاهزة للتغليف</div>
+      <div class="header-sub">Ready to Pack</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="btn btn-primary" id="btnRefresh" onclick="loadOrders()">
+      <span id="refreshIcon">🔄</span> تحديث
+    </button>
+    <button class="version-btn" onclick="openChangelog()">v1.0.0 📋</button>
+    <button class="btn btn-icon" onclick="openSettings()" title="الإعدادات">⚙️</button>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- MAIN CONTENT                                               -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="content">
+
+  <!-- Count Box -->
+  <div class="count-box" id="countBox" style="display:none;">
+    <div class="count-icon">📦</div>
+    <div>
+      <div class="count-label">أوردرات جاهزة للتغليف</div>
+      <div class="count-number" id="countTotal">0</div>
+      <div class="count-breakdown">
+        <span class="count-badge badge-s1">عادي: <span id="countS1">0</span></span>
+        <span class="count-badge badge-s2">استبدال/استرجاع: <span id="countS2">0</span></span>
+      </div>
+      <div class="count-sub" id="countSub"></div>
+    </div>
+  </div>
+
+  <!-- States -->
+  <div id="stateIdle" class="state-box">
+    <div class="state-icon">⏳</div>
+    <div class="state-title">في انتظار التحديث</div>
+    <div class="state-sub">اضغط "تحديث" لجلب الأوردرات</div>
+  </div>
+
+  <div id="stateLoading" class="state-box" style="display:none;">
+    <div style="margin-bottom:14px;"><span class="spinner"></span></div>
+    <div class="state-title">جاري الجلب...</div>
+    <div class="state-sub">يتم الاستعلام عن Shopify</div>
+  </div>
+
+  <div id="stateEmpty" class="state-box" style="display:none;">
+    <div class="state-icon">✅</div>
+    <div class="state-title">لا توجد أوردرات معلقة</div>
+    <div class="state-sub">كل الأوردرات Ready تم تغليفها أو لم تُطبع بعد</div>
+  </div>
+
+  <!-- Table -->
+  <div id="tableWrap" class="table-wrap" style="display:none;">
+    <table>
+      <thead>
+        <tr>
+          <th>رقم الأوردر</th>
+          <th>النوع</th>
+          <th>المنطقة</th>
+          <th>المندوب</th>
+          <th>وقت الطباعة</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <div class="last-updated" id="lastUpdated" style="display:none;"></div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- SETTINGS MODAL                                             -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="settingsOverlay">
+  <div class="modal">
+    <div class="modal-title">⚙️ الإعدادات</div>
+    <div class="field-group">
+      <label class="field-label">WORKER URL</label>
+      <input class="field-input" id="inWorkerUrl" type="url" autocomplete="off">
+    </div>
+    <div class="field-group">
+      <label class="field-label">WORKER SECRET</label>
+      <input class="field-input" id="inWorkerSecret" type="password" autocomplete="off">
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeSettings()">إلغاء</button>
+      <button class="btn btn-primary" onclick="saveSettings()">حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- CHANGELOG MODAL                                            -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="changelogOverlay">
+  <div class="modal">
+    <div class="modal-title">📋 سجل التغييرات</div>
+    <div class="cl-entry">
+      <div class="cl-version">v1.0.0 — 19-05-2026</div>
+      <div class="cl-item">
+        <span class="cl-tag new">جديد</span>
+        إطلاق الأداة — عرض أوردرات Ready (S1 + S2) المطبوعة وغير المغلفة
+      </div>
+      <div class="cl-item">
+        <span class="cl-tag new">جديد</span>
+        عداد بارز يوضح العدد الكلي + تفصيل عادي / استبدال
+      </div>
+      <div class="cl-item">
+        <span class="cl-tag new">جديد</span>
+        رابط مباشر لكل أوردر على داشبورد المتجر
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeChangelog()">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                                  -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<script>
+  // ── Config ─────────────────────────────────────────────────
+  const LS_URL    = 'ready_to_pack_worker_url';
+  const LS_SECRET = 'ready_to_pack_worker_secret';
+  const SHOP_DOMAIN = '6c7e1a-53.myshopify.com';
+
+  function getConfig() {
+    return {
+      url:    (localStorage.getItem(LS_URL)    || '').replace(/\/$/, ''),
+      secret: (localStorage.getItem(LS_SECRET) || ''),
+    };
+  }
+
+  // ── Time Helpers ────────────────────────────────────────────
+  function toCairo(iso) {
+    return new Date(new Date(iso).getTime() + 3 * 60 * 60 * 1000);
+  }
+  function formatDateTime(iso) {
+    if (!iso) return null;
+    const d   = toCairo(iso);
+    const pad = n => String(n).padStart(2, '0');
+    let h     = d.getUTCHours();
+    const ampm = h >= 12 ? 'مساءً' : 'صباحاً';
+    h = h % 12 || 12;
+    return `${pad(d.getUTCDate())}-${pad(d.getUTCMonth()+1)}-${d.getUTCFullYear()} ${pad(h)}:${pad(d.getUTCMinutes())} ${ampm}`;
+  }
+  function formatNow() {
+    return formatDateTime(new Date().toISOString());
+  }
+
+  // ── Toast ───────────────────────────────────────────────────
+  let toastTimer;
+  function showToast(msg, type = '', duration = 2800) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className   = 'show ' + type;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { el.className = ''; }, duration);
+  }
+
+  // ── API Helper ──────────────────────────────────────────────
+  async function apiGet(action, params = {}) {
+    const { url, secret } = getConfig();
+    if (!url || !secret) throw new Error('يرجى ضبط الإعدادات أولاً');
+    const qs = new URLSearchParams({ action, ...params }).toString();
+    const resp = await fetch(`${url}?${qs}`, {
+      headers: { 'Authorization': `Bearer ${secret}` },
+    });
+    const data = await resp.json();
+    if (!data.ok) throw new Error(data.error || 'خطأ غير معروف');
+    return data;
+  }
+
+  // ── State helpers ───────────────────────────────────────────
+  function showState(id) {
+    ['stateIdle', 'stateLoading', 'stateEmpty'].forEach(s => {
+      document.getElementById(s).style.display = s === id ? '' : 'none';
+    });
+    const hasTable = id === null;
+    document.getElementById('tableWrap').style.display  = hasTable ? '' : 'none';
+    document.getElementById('countBox').style.display   = hasTable ? '' : 'none';
+    document.getElementById('lastUpdated').style.display = hasTable ? '' : 'none';
+  }
+
+  // ── Load Orders ─────────────────────────────────────────────
+  async function loadOrders() {
+    const btn = document.getElementById('btnRefresh');
+    btn.classList.add('btn-loading');
+    document.getElementById('refreshIcon').textContent = '⏳';
+    showState('stateLoading');
+
+    try {
+      const data = await apiGet('get_ready_orders');
+      const orders = data.orders || [];
+
+      if (orders.length === 0) {
+        showState('stateEmpty');
+        return;
+      }
+
+      const s1Count = orders.filter(o => o.orderType === 'S1').length;
+      const s2Count = orders.filter(o => o.orderType === 'S2').length;
+
+      // Update count box
+      document.getElementById('countTotal').textContent = orders.length.toLocaleString('en-US');
+      document.getElementById('countS1').textContent    = s1Count.toLocaleString('en-US');
+      document.getElementById('countS2').textContent    = s2Count.toLocaleString('en-US');
+      document.getElementById('countSub').textContent   = `آخر تحديث: ${formatNow()}`;
+
+      // Render table
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+
+      for (const order of orders) {
+        const tr = document.createElement('tr');
+
+        const orderUrl = `https://admin.shopify.com/store/6c7e1a-53/orders/${order.id}`;
+        const typeLabel = order.orderType === 'S1' ? 'عادي' : 'استبدال/استرجاع';
+        const typeClass = order.orderType === 'S1' ? 'type-s1' : 'type-s2';
+        const printTime = order.printingTime ? formatDateTime(order.printingTime) : null;
+
+        tr.innerHTML = `
+          <td>
+            <a class="order-link" href="${orderUrl}" target="_blank" rel="noopener">${escHtml(order.name)}</a>
+          </td>
+          <td><span class="type-badge ${typeClass}">${typeLabel}</span></td>
+          <td>${order.zone ? escHtml(order.zone) : '<span class="cell-dash">—</span>'}</td>
+          <td>${order.courier ? escHtml(order.courier) : '<span class="cell-dash">—</span>'}</td>
+          <td class="cell-mono">${printTime || '<span class="cell-dash">—</span>'}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+
+      // Show table
+      showState(null);
+      document.getElementById('lastUpdated').textContent = `آخر تحديث: ${formatNow()}`;
+      document.getElementById('lastUpdated').style.display = '';
+
+    } catch (err) {
+      showToast('❌ ' + err.message, 'error', 4000);
+      showState('stateIdle');
+    } finally {
+      btn.classList.remove('btn-loading');
+      document.getElementById('refreshIcon').textContent = '🔄';
+    }
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // ── Settings ────────────────────────────────────────────────
+  function openSettings() {
+    document.getElementById('inWorkerUrl').value    = localStorage.getItem(LS_URL)    || '';
+    document.getElementById('inWorkerSecret').value = localStorage.getItem(LS_SECRET) || '';
+    document.getElementById('settingsOverlay').classList.add('open');
+  }
+  function closeSettings() {
+    document.getElementById('settingsOverlay').classList.remove('open');
+  }
+  function saveSettings() {
+    const url    = (document.getElementById('inWorkerUrl').value    || '').trim().replace(/\/$/, '');
+    const secret = (document.getElementById('inWorkerSecret').value || '').trim();
+    if (!url || !secret) { showToast('يرجى ملء جميع الحقول', 'warning'); return; }
+    localStorage.setItem(LS_URL,    url);
+    localStorage.setItem(LS_SECRET, secret);
+    closeSettings();
+    showToast('✅ تم حفظ الإعدادات', 'success');
+  }
+
+  // ── Changelog ───────────────────────────────────────────────
+  function openChangelog()  { document.getElementById('changelogOverlay').classList.add('open'); }
+  function closeChangelog() { document.getElementById('changelogOverlay').classList.remove('open'); }
+
+  // ── Close modals on overlay click ───────────────────────────
+  document.getElementById('settingsOverlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeSettings();
+  });
+  document.getElementById('changelogOverlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeChangelog();
+  });
+
+  // ── Auto-load on page open if config exists ─────────────────
+  window.addEventListener('load', () => {
+    const { url, secret } = getConfig();
+    if (url && secret) loadOrders();
+  });
+</script>
+
+</body>
+</html>
